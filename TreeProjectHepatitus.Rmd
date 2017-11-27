@@ -1,0 +1,60 @@
+---
+title: "Making Trees"
+author: "Kim Roth / Loren Rhodes"
+date: "10/17/2017"
+output: html_document
+---
+Name(s):
+
+**Data setup**
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(mosaic)
+library(rpart) #where the tree routines are
+library(partykit) #for good tree visualization
+library(sp)
+library(randomForest)
+```
+
+We will be using data about patients with acute hepatitis and trying to classify which explanatory variables predict death of a patient.
+
+Load the cleaned data.
+```{r}
+
+```
+
+Now you'll need to take all of the quantitative variables that are categorical and use as.factor like in the example from class to make R treat them like categories called factors (needed for randomForests).  
+```{r}
+
+```
+
+Now let's pick a training set and a test set.
+```{r}
+#setseed(10) #insert a number here. I reccomend you use your birthday. This makes R pick the same set if you rerun the analysis. Since we are trying to write about specific results here we want to do that.
+n=nrow(hepatitis)
+testSample=sample.int(n,size=round(.2*n))
+train=hepatitis[-testSample,]
+test=hepatitis[testSample,]
+
+```
+
+Our response variable will be Class. It has two values, 2=LIVE and 1=DIE.  Note for sex, 2-male and 1=female. For yes/no categorical variables 2=No and 1=yes.
+
+
+**Project directions**
+Your job is to write a short paper talking about this data and trees made with it.
+
+Begin with a description of the data set. You will need to look up the variables that show up in the paper to see what they mean so you can talk about them in context.
+
+First, make a tree in R using all possible predcitors predicting Class with the Gini coefficent. For the tree you will show a picture of the tree, show how it will classify one case in the data set, and  evaluate the prediction ability on the test and training data using the confusion matrix. 
+
+Second, make a tree with the information gain in R.
+
+Third, make a tree in Weka (copy and paste the Weka text output into R).  The csv file will need a column name for the first column (call it Row), which is the one you can delete. You might convert most of the variables to nominal type (Filters -> Unsupervised -> attribute -> NumericToNominal and specify the column numbers) for nicer trees. You may then remove the Row number column that is explicit in the data.    Recall the decision tree algorithm is J48 under Classifiers -> Trees.
+
+Fourth, make a random forest in R. 
+
+Finally, compare the first tree to the trees to those generated in the second, third and fourth steps. Your comparison will include what variables are new to the tree/importance list of the forest and the prediction ability on the trainig and test set.  
+
+Conclude with what variables seem to be important to predicting Class and which tree you think should be used and why.
